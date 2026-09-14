@@ -23,6 +23,17 @@ function normalizeApiBase(value) {
   return trimmed.replace(/\/+$/, "");
 }
 
+function resolveApiUrl(pathOrUrl, apiBaseUrl) {
+  if (/^https?:\/\//.test(pathOrUrl)) {
+    return pathOrUrl;
+  }
+  const baseUrl = new URL(`${apiBaseUrl}/`);
+  if (pathOrUrl.startsWith("/")) {
+    return new URL(`.${pathOrUrl}`, baseUrl).toString();
+  }
+  return new URL(pathOrUrl, baseUrl).toString();
+}
+
 function setStatus(message, isError = false) {
   statusElement.textContent = message;
   statusElement.classList.toggle("error", isError);
@@ -106,7 +117,8 @@ form.addEventListener("submit", async (event) => {
   setStatus("Cloning repository and building graph…");
 
   try {
-    const response = await fetch(`${apiBaseUrl}/api/build`, {
+    const buildUrl = resolveApiUrl("api/build", apiBaseUrl);
+    const response = await fetch(buildUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ repository_url: repositoryUrlInput.value }),
@@ -120,7 +132,7 @@ form.addEventListener("submit", async (event) => {
     edgesElement.textContent = data.edge_count.toLocaleString();
     statsElement.hidden = false;
 
-    const graphUrl = new URL(data.graph_url, `${apiBaseUrl}/`).toString();
+    const graphUrl = resolveApiUrl(data.graph_url, apiBaseUrl);
     const downloadLink = document.createElement("a");
     downloadLink.className = "button";
     downloadLink.href = graphUrl;
