@@ -156,21 +156,11 @@ button:disabled {
   overflow: auto;
 }
 
-.wiki h1 {
-  font-size: 30px;
-}
-
-.wiki h2 {
-  margin-top: 32px;
-  border-bottom: 1px solid var(--line);
-}
-
-.wiki a {
-  color: var(--cyan);
-}
-
-.wiki code {
-  color: #c4b5fd;
+.wiki-frame {
+  width: 100%;
+  min-height: 720px;
+  border: 0;
+  background: transparent;
 }
 
 @media (max-width: 650px) {

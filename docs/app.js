@@ -9,6 +9,7 @@ const nodesElement = document.querySelector("#nodes");
 const edgesElement = document.querySelector("#edges");
 const actionsElement = document.querySelector("#actions");
 const wikiElement = document.querySelector("#wiki");
+const wikiFrameElement = document.querySelector("#wiki-frame");
 const submitButton = document.querySelector("#submit");
 
 const storedApiBase = window.localStorage.getItem("semantica.apiBaseUrl");
@@ -31,7 +32,48 @@ function resetResult() {
   statsElement.hidden = true;
   actionsElement.innerHTML = "";
   wikiElement.hidden = true;
-  wikiElement.innerHTML = "";
+  wikiFrameElement.srcdoc = "";
+}
+
+function renderWiki(html) {
+  wikiFrameElement.srcdoc = `<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <style>
+      :root { color-scheme: dark; }
+      body {
+        margin: 0;
+        color: #eef2ff;
+        background: transparent;
+        font: 15px/1.6 Inter, system-ui, sans-serif;
+      }
+      h1 { font-size: 30px; }
+      h2 {
+        margin-top: 32px;
+        border-bottom: 1px solid #263047;
+      }
+      a { color: #63e6ff; }
+      code { color: #c4b5fd; }
+      pre {
+        overflow: auto;
+        padding: 16px;
+        border-radius: 12px;
+        background: #0b1020;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th, td {
+        padding: 8px;
+        border: 1px solid #263047;
+        text-align: left;
+      }
+    </style>
+  </head>
+  <body>${html}</body>
+</html>`;
 }
 
 form.addEventListener("submit", async (event) => {
@@ -61,7 +103,7 @@ form.addEventListener("submit", async (event) => {
     const graphUrl = new URL(data.graph_url, `${apiBaseUrl}/`).toString();
     actionsElement.innerHTML = `<a class="button" href="${graphUrl}" target="_blank" rel="noreferrer">Download graph.json</a>`;
 
-    wikiElement.innerHTML = data.wiki_html;
+    renderWiki(data.wiki_html);
     wikiElement.hidden = false;
     setStatus("Wiki ready.");
   } catch (error) {
