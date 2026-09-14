@@ -1,0 +1,184 @@
+:root {
+  color-scheme: dark;
+  --bg: #070a12;
+  --panel: rgba(16, 21, 34, 0.88);
+  --line: #263047;
+  --text: #eef2ff;
+  --muted: #94a3b8;
+  --cyan: #63e6ff;
+  --violet: #a78bfa;
+  --danger: #fda4af;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: radial-gradient(circle at 20% 0, #17213a 0, var(--bg) 42%);
+  color: var(--text);
+  font: 15px/1.6 Inter, system-ui, sans-serif;
+}
+
+code {
+  font-family: ui-monospace, SFMono-Regular, SFMono-Regular, Consolas, monospace;
+}
+
+.layout {
+  max-width: 1120px;
+  margin: auto;
+  padding: 56px 24px 72px;
+}
+
+.eyebrow {
+  color: var(--cyan);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-size: 12px;
+}
+
+h1 {
+  font-size: clamp(38px, 7vw, 72px);
+  line-height: 1;
+  margin: 12px 0 18px;
+  max-width: 850px;
+}
+
+h1 span {
+  color: var(--violet);
+}
+
+.lead,
+.hint,
+.status {
+  color: var(--muted);
+}
+
+.lead {
+  font-size: 18px;
+  max-width: 760px;
+}
+
+.panel,
+.card,
+.wiki {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+}
+
+.panel {
+  padding: 22px;
+  margin: 34px 0 12px;
+}
+
+.field {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.field span {
+  font-weight: 700;
+}
+
+input,
+button,
+.button {
+  border-radius: 12px;
+  font: inherit;
+}
+
+input {
+  width: 100%;
+  background: #0b1020;
+  border: 1px solid var(--line);
+  color: var(--text);
+  padding: 15px 17px;
+  outline: none;
+}
+
+input:focus {
+  border-color: var(--cyan);
+}
+
+button,
+.button {
+  border: 0;
+  padding: 15px 20px;
+  background: linear-gradient(135deg, var(--cyan), var(--violet));
+  color: #070a12;
+  font-weight: 800;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: wait;
+}
+
+.status {
+  min-height: 28px;
+}
+
+.status.error {
+  color: var(--danger);
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin: 24px 0;
+}
+
+.card,
+.wiki {
+  padding: 22px;
+}
+
+.number {
+  font-size: 34px;
+  font-weight: 800;
+}
+
+.label {
+  color: var(--muted);
+}
+
+.actions {
+  margin: 18px 0 26px;
+}
+
+.wiki {
+  overflow: auto;
+}
+
+.wiki h1 {
+  font-size: 30px;
+}
+
+.wiki h2 {
+  margin-top: 32px;
+  border-bottom: 1px solid var(--line);
+}
+
+.wiki a {
+  color: var(--cyan);
+}
+
+.wiki code {
+  color: #c4b5fd;
+}
+
+@media (max-width: 650px) {
+  .layout {
+    padding-inline: 18px;
+  }
+
+  .stats {
+    grid-template-columns: 1fr;
+  }
+}
