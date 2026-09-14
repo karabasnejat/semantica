@@ -45,6 +45,17 @@ SEMANTICA_ALLOW_ANONYMOUS=true semantica-explorer \
   --graph wiki-output/graph.json
 ```
 
+## GitHub URL web UI
+
+```bash
+semantica-wiki serve --port 8080
+```
+
+Open `http://127.0.0.1:8080`, enter a public
+`https://github.com/owner/repository` URL, and select **Wiki oluştur**. Each run
+is written beneath `.semantica-wiki/runs/`; its Semantica `graph.json` can be
+downloaded from the result screen.
+
 Anonymous mode must only be used on localhost. Configure `SEMANTICA_API_KEY`
 before exposing Explorer to a network.
 
@@ -66,4 +77,3 @@ Relationship types: `CONTAINS`, `DECLARES`, `IMPORTS`.
 ```bash
 pytest
 ```
-
