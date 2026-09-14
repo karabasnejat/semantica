@@ -30,7 +30,7 @@ def serve(
     host: str = typer.Option("127.0.0.1", help="Interface to bind."),
     port: int = typer.Option(8080, min=1, max=65535),
 ) -> None:
-    """Start the GitHub URL ingestion web UI."""
+    """Start the FastAPI backend for the static frontend."""
     import uvicorn
 
     uvicorn.run("semantica_wiki.web:app", host=host, port=port)

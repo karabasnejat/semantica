@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Semantica Wiki</title>
+    <script src="./config.js"></script>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <main class="layout">
+      <p class="eyebrow">Graph-native code intelligence</p>
+      <h1>Generate a living <span>Code Wiki</span> from a GitHub repository.</h1>
+      <p class="lead">
+        Point the static frontend at your Render backend, submit a public GitHub repository URL,
+        and inspect the generated wiki plus downloadable graph JSON.
+      </p>
+
+      <form id="form" class="panel">
+        <label class="field">
+          <span>Backend base URL</span>
+          <input
+            id="api-base"
+            type="url"
+            inputmode="url"
+            placeholder="https://your-service.onrender.com"
+            aria-describedby="api-base-help"
+          >
+        </label>
+        <p id="api-base-help" class="hint">
+          Stored in your browser. You can also preconfigure <code>docs/config.js</code> for GitHub Pages.
+        </p>
+        <label class="field">
+          <span>GitHub repository URL</span>
+          <input
+            id="repository-url"
+            type="url"
+            required
+            value="https://github.com/karabasnejat/semantica"
+          >
+        </label>
+        <button id="submit" type="submit">Build wiki</button>
+      </form>
+
+      <p id="status" class="status"></p>
+
+      <section id="stats" class="stats" hidden>
+        <article class="card">
+          <div id="nodes" class="number">0</div>
+          <div class="label">Graph nodes</div>
+        </article>
+        <article class="card">
+          <div id="edges" class="number">0</div>
+          <div class="label">Graph edges</div>
+        </article>
+      </section>
+
+      <div id="actions" class="actions"></div>
+      <section id="wiki" class="wiki" hidden>
+        <iframe
+          id="wiki-frame"
+          class="wiki-frame"
+          title="Generated wiki preview"
+          tabindex="0"
+          sandbox="allow-popups allow-popups-to-escape-sandbox"
+        ></iframe>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

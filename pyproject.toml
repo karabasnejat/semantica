@@ -14,7 +14,7 @@ dependencies = [
   "fastapi>=0.115",
   "GitPython>=3.1.40",
   "markdown>=3.7",
-  "semantica[explorer]>=0.7.0",
+  "semantica[explorer]>=0.6.8",
   "typer>=0.12",
   "uvicorn>=0.30",
 ]
