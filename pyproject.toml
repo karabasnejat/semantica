@@ -1,0 +1,30 @@
+[build-system]
+requires = ["hatchling>=1.26"]
+build-backend = "hatchling.build"
+
+[project]
+name = "semantica-wiki"
+version = "0.1.0"
+description = "Graph-native repository wiki proof of concept powered by Semantica"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+dependencies = [
+  "GitPython>=3.1.40",
+  "semantica[explorer]>=0.7.0",
+  "typer>=0.12",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[project.scripts]
+semantica-wiki = "semantica_wiki.cli:app"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/semantica_wiki"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+
