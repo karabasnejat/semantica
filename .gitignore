@@ -1,8 +1,8 @@
 __pycache__/
 *.py[cod]
 .pytest_cache/
+.semantica-wiki/
 .venv/
 dist/
 build/
 wiki-output/
-
