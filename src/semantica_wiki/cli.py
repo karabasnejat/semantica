@@ -25,5 +25,16 @@ def build(
     typer.echo(f"Graph: {artifacts['graph'].resolve()}")
 
 
+@app.command()
+def serve(
+    host: str = typer.Option("127.0.0.1", help="Interface to bind."),
+    port: int = typer.Option(8080, min=1, max=65535),
+) -> None:
+    """Start the GitHub URL ingestion web UI."""
+    import uvicorn
+
+    uvicorn.run("semantica_wiki.web:app", host=host, port=port)
+
+
 if __name__ == "__main__":
     app()
