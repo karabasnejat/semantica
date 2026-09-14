@@ -28,6 +28,16 @@ function setStatus(message, isError = false) {
   statusElement.classList.toggle("error", isError);
 }
 
+function normalizeErrorMessage(error) {
+  if (error instanceof Error && error.message) {
+    return error.message;
+  }
+  if (typeof error === "string" && error) {
+    return error;
+  }
+  return "Build failed.";
+}
+
 function resetResult() {
   statsElement.hidden = true;
   actionsElement.innerHTML = "";
@@ -40,6 +50,7 @@ function renderWiki(html) {
 <html lang="en">
   <head>
     <meta charset="utf-8">
+    <base target="_blank">
     <style>
       :root { color-scheme: dark; }
       body {
@@ -76,6 +87,15 @@ function renderWiki(html) {
 </html>`;
 }
 
+async function parseResponse(response) {
+  const contentType = response.headers.get("content-type") || "";
+  if (contentType.includes("application/json")) {
+    return response.json();
+  }
+  const text = await response.text();
+  return text ? { detail: text } : {};
+}
+
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
   submitButton.disabled = true;
@@ -91,7 +111,7 @@ form.addEventListener("submit", async (event) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ repository_url: repositoryUrlInput.value }),
     });
-    const data = await response.json();
+    const data = await parseResponse(response);
     if (!response.ok) {
       throw new Error(data.detail || "Build failed.");
     }
@@ -101,13 +121,19 @@ form.addEventListener("submit", async (event) => {
     statsElement.hidden = false;
 
     const graphUrl = new URL(data.graph_url, `${apiBaseUrl}/`).toString();
-    actionsElement.innerHTML = `<a class="button" href="${graphUrl}" target="_blank" rel="noreferrer">Download graph.json</a>`;
+    const downloadLink = document.createElement("a");
+    downloadLink.className = "button";
+    downloadLink.href = graphUrl;
+    downloadLink.target = "_blank";
+    downloadLink.rel = "noreferrer";
+    downloadLink.textContent = "Download graph.json";
+    actionsElement.replaceChildren(downloadLink);
 
     renderWiki(data.wiki_html);
     wikiElement.hidden = false;
     setStatus("Wiki ready.");
   } catch (error) {
-    setStatus(error.message, true);
+    setStatus(normalizeErrorMessage(error), true);
   } finally {
     submitButton.disabled = false;
   }
